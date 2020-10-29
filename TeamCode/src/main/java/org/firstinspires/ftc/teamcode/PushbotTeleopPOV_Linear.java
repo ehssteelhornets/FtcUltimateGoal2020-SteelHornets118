@@ -39,7 +39,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 mode--;
                 sleep(100);
             }
-            
+            //Testing for CRServo to move clockwise continuously
+            if (gamepad1.x) {
+                robot.testServo.setPower(1);
+                sleep(5000);
+                robot.testServo.setPower(0);
+            }
             //Tank Drive
             /*if (mode == 2) {
                 telemetry.addData("Driving", "false");
