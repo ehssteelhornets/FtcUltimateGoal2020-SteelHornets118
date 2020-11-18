@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name="Pushbot: Teleop POV", group="Pushbot")
@@ -14,7 +16,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     private static double right2;
     private static double left2;
     private static double foundHook = 1;
-    //private static double testServo = 1;
+    private static double tuckAway = 1;
     Pushbot_2020 robot = new Pushbot_2020();
 
     @Override
@@ -39,14 +41,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 mode--;
                 sleep(100);
             }
-            //Testing for CRServo to move clockwise continuously
-            if (gamepad1.x) {
-                robot.testServo.setPower(1);
-                sleep(5000);
-                robot.testServo.setPower(0);
-            }
             //Tank Drive
-            /*if (mode == 2) {
+            if (mode == 2) {
                 telemetry.addData("Driving", "false");
                 telemetry.update();
                 right = gamepad1.right_stick_y;
@@ -73,11 +69,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.rightDrive.setPower(v2);
                 robot.leftDrive2.setPower(v3);
                 robot.rightDrive2.setPower(v4);
-            }*/
+            }
 
-
-            /*//foundation hook toggle
-            if (gamepad2.a && foundHook != 0) {
+            //foundation hook toggle
+            /*if (gamepad2.a && foundHook != 0) {
                 foundHook--;
                 sleep(300);
             } else if (gamepad2.a) {
@@ -108,7 +103,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             //linear actuator
             robot.vertExt.setPower(gamepad2.left_stick_y);
             telemetry.addData("Moving the linear actuator", "true");
-            telemetry.update();
+            telemetry.update();*/
 
             /* old linear actuator code
             if (gamepad2.dpad_up) {
@@ -122,7 +117,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             //tape extender
             /*robot.tapeExt.setPower(gamepad2.right_stick_y);
             telemetry.addData("Moving the tape extender", "true");
-            telemetry.update();
+            telemetry.update();*/
 
 
             // secondstone grabber mech
@@ -166,31 +161,31 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 telemetry.update();
             }*/
 
-            /*testServoclaw toggle
-            if (gamepad1.x && testServo != 0) {
-                testServo--;
+            //tuckawayclaw toggle
+            /*if (gamepad2.x && tuckAway != 0) {
+                tuckAway--;
                 sleep(300);
-            } else if (gamepad1.x) {
-                testServo++;
+            } else if (gamepad2.x) {
+                tuckAway++;
                 sleep(300);
             }
 
-            if (testServo == 0) {
-                robot.testServo.setPower(-1);
-                //robot.testServoClaw2.setPower(-.4);
+            if (tuckAway == 0) {
+                robot.tuckAwayClaw1.setPower(.8);
+                robot.tuckAwayClaw2.setPower(-.4);
             }
-            telemetry.addData("moving testServo claw out", "true");
+            telemetry.addData("moving tuckAway claw out", "true");
             telemetry.update();
 
-            if (testServo != 0) {
-                robot.testServo.setPower(1);
-                //robot.testServoClaw2.setPower(0.9);
+            if (tuckAway != 0) {
+                robot.tuckAwayClaw1.setPower(-.5);
+                robot.tuckAwayClaw2.setPower(0.9);
             }
-            telemetry.addData("moving testServo claw in", "true");
-            telemetry.update();
+            telemetry.addData("moving tuckAway claw in", "true");
+            telemetry.update();*/
         }
-    }*/
-    /*void drive (boolean precise, boolean reverse){
+    }
+    void drive (boolean precise, boolean reverse){
         double right_scaled = scaleMotor(right, precise);
         double left_scaled = scaleMotor(left, precise);
 
@@ -222,8 +217,5 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         if (num < 0.0)
             scaled = -scaled;
         return scaled;
-    }*/
-        }
     }
 }
-
