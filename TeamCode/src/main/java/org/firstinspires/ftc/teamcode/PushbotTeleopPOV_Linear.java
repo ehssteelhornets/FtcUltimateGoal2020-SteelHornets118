@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name="Pushbot: Teleop POV", group="Pushbot")
@@ -65,10 +63,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 final double v2 = r * Math.sin(robotAngle) - rightX;
                 final double v3 = r * Math.sin(robotAngle) + rightX;
                 final double v4 = r * Math.cos(robotAngle) - rightX;
-                robot.leftDrive.setPower(v1);
-                robot.rightDrive.setPower(v2);
-                robot.leftDrive2.setPower(v3);
-                robot.rightDrive2.setPower(v4);
+                robot.driveLF.setPower(v1);
+                robot.driveRF.setPower(v2);
+                robot.driveLB.setPower(v3);
+                robot.driveRB.setPower(v4);
             }
 
             //foundation hook toggle
@@ -195,10 +193,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             left_scaled = -temp;
         }
         //Set power for motors
-        robot.rightDrive.setPower(right_scaled);
-        robot.rightDrive2.setPower(right_scaled);
-        robot.leftDrive.setPower(left_scaled);
-        robot.leftDrive2.setPower(left_scaled);
+        robot.driveRF.setPower(right_scaled);
+        robot.driveRB.setPower(right_scaled);
+        robot.driveLF.setPower(left_scaled);
+        robot.driveLB.setPower(left_scaled);
     }
     double scaleMotor ( double num, boolean precise){
         if (num == 0.0)
