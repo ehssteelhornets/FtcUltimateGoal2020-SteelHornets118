@@ -42,15 +42,22 @@ public class Simple_Auto_Square extends LinearOpMode {
                 robot.driveRF.getCurrentPosition());
         telemetry.update();
         waitForStart();
-        // Drives in a 10" square
+        // Drives in a 10" square and spins a couple times
         encoderDrive(0.3, 10, 'F');
-        sleep(2000);
+        sleep(1000);
         encoderDrive(0.3, 10,'L');
-        sleep(2000);
+        sleep(1000);
         encoderDrive(0.3, 10, 'B');
-        sleep(2000);
+        sleep(1000);
         encoderDrive(0.3,10,'R');
-        sleep(2000);
+        sleep(1000);
+        encoderTurn(.3, 360, true);
+        sleep(1000);
+        encoderTurn(.3, 90, false);
+        sleep(1000);
+        encoderTurn(.3, 180, true);
+        sleep(1000);
+        encoderTurn(.3, 90, false);
     }
 
     public void encoderDrive(double speed,
@@ -83,6 +90,77 @@ public class Simple_Auto_Square extends LinearOpMode {
                 } else if(dir == 'R') {
                     robot.driveLF.setTargetPosition(target);
                     robot.driveRF.setTargetPosition(-target);
+                    robot.driveLB.setTargetPosition(-target);
+                    robot.driveRB.setTargetPosition(target);
+                }
+                // Turn On RUN_TO_POSITION
+                robot.driveLF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.driveRF.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.driveLB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.driveRB.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                // reset the timeout time and start motion.
+                runtime.reset();
+                robot.driveLF.setPower(Math.abs(speed));
+                robot.driveRF.setPower(Math.abs(speed));
+                robot.driveLB.setPower(Math.abs(speed));
+                robot.driveRB.setPower(Math.abs(speed));
+                while (opModeIsActive() &&
+                        (runtime.seconds() < TIMEOUT) &&
+                        (robot.driveLF.isBusy() && robot.driveRF.isBusy() && robot.driveRB.isBusy() &&  robot.driveLB.isBusy())) {
+
+                    // Display it for the driver.
+                    telemetry.addData("Path1", "Running to %7d :%7d", target, target);
+                    telemetry.addData("Path2", "Running at %7d :%7d",
+                            robot.driveLF.getCurrentPosition(),
+                            robot.driveRF.getCurrentPosition());
+                    telemetry.addData("Back wheels", target + "" + target);
+                    telemetry.update();
+                }
+
+                // Stop all motion
+                robot.driveLF.setPower(0);
+                robot.driveRF.setPower(0);
+                robot.driveLB.setPower(0);
+                robot.driveRB.setPower(0);
+                // Turn off RUN_TO_POSITION
+                robot.driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.driveLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                robot.driveRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                robot.driveLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                robot.driveRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                //  sleep(250);   // optional pause after each move
+            }
+        } catch (TargetPositionNotSetException e) {
+            telemetry.addData("Mission Failed", "We'll get 'em next time: " + test);
+            telemetry.update();
+        }
+    }
+
+    public void encoderTurn(double speed,
+                            double ang,
+                            boolean cWise) {
+        int TIMEOUT = 10;
+        double COUNTS_PER_DEGREE = 11.85;
+
+        int target;
+        // Ensure that the opmode is still active
+        try {
+            if (opModeIsActive()) {
+                // Determine new target position, and pass to motor controller
+                target =  (int) (ang * COUNTS_PER_DEGREE);
+                // Decide which direction each motor should go
+                if(cWise) {
+                    robot.driveLF.setTargetPosition(target);
+                    robot.driveRF.setTargetPosition(-target);
+                    robot.driveLB.setTargetPosition(target);
+                    robot.driveRB.setTargetPosition(-target);
+                } else {
+                    robot.driveLF.setTargetPosition(-target);
+                    robot.driveRF.setTargetPosition(target);
                     robot.driveLB.setTargetPosition(-target);
                     robot.driveRB.setTargetPosition(target);
                 }
