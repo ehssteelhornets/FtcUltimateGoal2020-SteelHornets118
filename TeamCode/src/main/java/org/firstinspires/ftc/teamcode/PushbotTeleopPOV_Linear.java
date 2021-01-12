@@ -69,6 +69,15 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.driveRB.setPower(v4);
             }
 
+            //Continuous rotation of CRServo
+            if (gamepad1.a) {
+                robot.testServo.setPower(0.8);
+            }
+            if (gamepad1.b) {
+                robot.testServo.setPower(-0.8);
+            }
+            telemetry.update();
+
             //foundation hook toggle
             /*if (gamepad2.a && foundHook != 0) {
                 foundHook--;
