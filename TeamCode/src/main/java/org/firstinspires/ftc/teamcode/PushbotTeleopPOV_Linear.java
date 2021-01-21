@@ -13,8 +13,6 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     private static double left;
     private static double right2;
     private static double left2;
-    private static double foundHook = 1;
-    private static double tuckAway = 1;
     Pushbot_2020 robot = new Pushbot_2020();
 
     @Override
@@ -46,10 +44,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 right = gamepad1.right_stick_y;
                 left = gamepad1.left_stick_y;
                 boolean precisionMode = false;
-                if (gamepad2.left_trigger != 0)
+                if (gamepad1.left_trigger != 0)
                     precisionMode = true;
                 boolean reverseMode = false;
-                if (gamepad2.right_trigger != 0)
+                if (gamepad1.right_trigger != 0)
                     reverseMode = true;
                 drive(precisionMode, reverseMode);
             } else if (mode == 1) {
@@ -69,6 +67,27 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.driveRB.setPower(v4);
             }
 
+            // Intake driven by right trigger
+            if(gamepad1.right_trigger > 0) {
+                robot.intake.setPower(1);
+            } else {
+                robot.intake.setPower(0);
+            }
+
+            if(gamepad1.a) {
+                robot.armOut(true);
+            } else if(gamepad1.b) {
+                robot.armOut(false);
+            }
+
+            // Claw Controlled by dpad down and
+            if(gamepad1.dpad_down) {
+                robot.openClaw(true);
+            } else if(gamepad1.dpad_left) {
+                robot.openClaw(false);
+            }
+
+            /*
             //Continuous rotation of CRServo
             if (gamepad1.a) {
                 robot.testServo.setPower(0.8);
@@ -77,6 +96,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.testServo.setPower(-0.8);
             }
             telemetry.update();
+             */
 
             //foundation hook toggle
             /*if (gamepad2.a && foundHook != 0) {
