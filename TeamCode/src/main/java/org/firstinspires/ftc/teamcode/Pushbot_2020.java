@@ -18,7 +18,7 @@ public class Pushbot_2020 {
     public DcMotor intake;
     //public CRServo testServo;
     //public CRServo spool;
-    private Servo armServo;
+    public DcMotor armMotor;
     private Servo clawServo;
     //public Servo pusherL;
     //public Servo pusherR;
@@ -44,7 +44,7 @@ public class Pushbot_2020 {
         //Define and Initialize servos
         //testServo = hwMap.get(CRServo.class, "testServo");
         //spool = hwMap.get(CRServo.class, "spool");
-        armServo = hwMap.get(Servo.class, "armServo");
+        armMotor = hwMap.get(DcMotor.class, "armMotor");
         clawServo = hwMap.get(Servo.class, "clawServo");
         //pusherL = hwMap.get(Servo.class, "pusherL");
         //pusherR = hwMap.get(Servo.class, "pusherR");
@@ -69,7 +69,7 @@ public class Pushbot_2020 {
         //set servo to starting position
         //testServo.setPower(0.0);
         //pool.setPower(0.0);
-        armServo.setPosition(0.0);
+        armMotor.setPower(0.0);
         clawServo.setPosition(0.0);
         //pusherL.setPosition(0.0);
         //pusherR.setPosition(0.0);
@@ -90,10 +90,19 @@ public class Pushbot_2020 {
     }
 
     public void armOut(boolean out) {
+        double TIMEOUT = 1.0;
         if (out) {
-            armServo.setPosition(0);
+            runtime.reset();
+            while (runtime.seconds() < TIMEOUT) {
+                armMotor.setPower(-1);
+            }
+            armMotor.setPower(0);
         } else {
-            armServo.setPosition(1);
+            runtime.reset();
+            while (runtime.seconds() < TIMEOUT) {
+                armMotor.setPower(1);
+            }
+            armMotor.setPower(0);
         }
     }
 

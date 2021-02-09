@@ -75,9 +75,11 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             if(gamepad1.a) {
-                robot.armOut(true);
+                robot.armMotor.setPower(1.0);
             } else if(gamepad1.b) {
-                robot.armOut(false);
+                robot.armMotor.setPower(-1.0);
+            } else {
+                robot.armMotor.setPower(0);
             }
 
             // Claw Controlled by dpad down and

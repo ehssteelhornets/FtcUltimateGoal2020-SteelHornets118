@@ -26,7 +26,7 @@ public class Simple_Auto_Square extends LinearOpMode {
         //Initializes the robot
         robot.init(hardwareMap);
         //Reset our encoders
-        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.addData("Status", "Resetting Encoders");   
         telemetry.update();
         robot.driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
