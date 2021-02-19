@@ -69,15 +69,15 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // Intake driven by right trigger
             if(gamepad1.right_trigger > 0) {
-                robot.intake.setPower(1);
+                robot.intake.setPower(1.0);
             } else {
                 robot.intake.setPower(0);
             }
 
             if(gamepad1.a) {
-                robot.armMotor.setPower(1.0);
+                robot.armMotor.setPower(.5);
             } else if(gamepad1.b) {
-                robot.armMotor.setPower(-1.0);
+                robot.armMotor.setPower(-.5);
             } else {
                 robot.armMotor.setPower(0);
             }

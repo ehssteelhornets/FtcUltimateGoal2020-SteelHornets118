@@ -70,7 +70,7 @@ public class Pushbot_2020 {
         //testServo.setPower(0.0);
         //pool.setPower(0.0);
         armMotor.setPower(0.0);
-        clawServo.setPosition(0.0);
+        clawServo.setPosition(0.4);
         //pusherL.setPosition(0.0);
         //pusherR.setPosition(0.0);
         // Set all motors to run without encoders.
@@ -83,7 +83,7 @@ public class Pushbot_2020 {
 
     public void openClaw(boolean open) {
         if (open) {
-            clawServo.setPosition(0);
+            clawServo.setPosition(.4);
         } else {
             clawServo.setPosition(1);
         }
@@ -94,13 +94,13 @@ public class Pushbot_2020 {
         if (out) {
             runtime.reset();
             while (runtime.seconds() < TIMEOUT) {
-                armMotor.setPower(-1);
+                armMotor.setPower(.5);
             }
             armMotor.setPower(0);
         } else {
             runtime.reset();
             while (runtime.seconds() < TIMEOUT) {
-                armMotor.setPower(1);
+                armMotor.setPower(-.5);
             }
             armMotor.setPower(0);
         }

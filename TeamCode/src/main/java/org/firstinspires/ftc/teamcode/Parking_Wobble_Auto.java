@@ -17,7 +17,7 @@ public class Parking_Wobble_Auto extends LinearOpMode {
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP AndyMark Orbital 20
     static final double WHEEL_DIAMETER_INCHES = 3.75;     // For figuring circumference
     static final double WHEEL_CIRCUMFERENCE_INCHES = (WHEEL_DIAMETER_INCHES * Math.PI);
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415) / 1.01; //1.01 is a manual adjustment
     //TODO: Get new CPI for the motors
     float[] hsvValues = {0F, 0F, 0F};
 
@@ -43,11 +43,19 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        encoderDrive(.4,36,'F');
-        robot.armOut(true);
         robot.openClaw(true);
+        sleep(500);
+        robot.armOut(true);
+        sleep(500);
+        robot.openClaw(false);
+        sleep(500);
+        encoderDrive(.4,108,'F');
+        robot.openClaw(true);
+        sleep(500);
         robot.armOut(false);
-        encoderDrive(.4,12,'B');
+        sleep(500);
+        encoderDrive(.4,48,'B');
+        sleep(5000);
     }
 
     public void encoderDrive(double speed,
