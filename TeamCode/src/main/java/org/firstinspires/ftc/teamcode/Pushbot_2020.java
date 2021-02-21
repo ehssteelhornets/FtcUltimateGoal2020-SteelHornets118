@@ -144,6 +144,25 @@ public class Pushbot_2020 {
         }
     }
 
+    public void load() {
+        lift.setPower(-1);
+    }
+
+    public void autoFire(int launchNum){
+        runtime.reset();
+        while(runtime.seconds() < .5) {
+            launch(true);
+        } runtime.reset();
+        while(runtime.seconds() < .5) {
+            launch(false);
+        }
+        runtime.reset();
+        while (runtime.seconds() < 1) {
+            lift.setPower(-1);
+        }
+        lift.setPower(0);
+    }
+
 
     public void encoderDrive(double speed,
                              double dist, // in inches

@@ -49,13 +49,27 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         sleep(500);
         robot.openClaw(false);
         sleep(500);
-        encoderDrive(.4,108,'F');
+        encoderDrive(.4, 108, 'F');
         robot.openClaw(true);
         sleep(500);
         robot.armOut(false);
         sleep(500);
-        encoderDrive(.4,48,'B');
-        sleep(5000);
+        encoderDrive(.4, 66, 'B');
+        sleep(500);/*
+        robot.barrel(true);
+        sleep(500);
+        robot.rev(true);
+        sleep(2000);
+        for (int i = 0; i < 3; i++) {
+            robot.autoFire(i);
+            if (i < 2) {
+                encoderDrive(.4, 6.25, 'L');
+                sleep(500);
+            }
+        }
+        sleep(500);
+        robot.rev(false);*/
+        encoderDrive(.4, 18, 'F');
     }
 
     public void encoderDrive(double speed,
@@ -68,24 +82,24 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         try {
             if (opModeIsActive()) {
                 // Determine new target position, and pass to motor controller
-                target =  (int) (dist * COUNTS_PER_INCH);
+                target = (int) (dist * COUNTS_PER_INCH);
                 // Decide which direction each motor should go
-                if(dir == 'F') {
+                if (dir == 'F') {
                     robot.driveLF.setTargetPosition(target);
                     robot.driveRF.setTargetPosition(target);
                     robot.driveLB.setTargetPosition(target);
                     robot.driveRB.setTargetPosition(target);
-                } else if(dir == 'B') {
+                } else if (dir == 'B') {
                     robot.driveLF.setTargetPosition(-target);
                     robot.driveRF.setTargetPosition(-target);
                     robot.driveLB.setTargetPosition(-target);
                     robot.driveRB.setTargetPosition(-target);
-                } else if(dir == 'L') {
+                } else if (dir == 'L') {
                     robot.driveLF.setTargetPosition(-target);
                     robot.driveRF.setTargetPosition(target);
                     robot.driveLB.setTargetPosition(target);
                     robot.driveRB.setTargetPosition(-target);
-                } else if(dir == 'R') {
+                } else if (dir == 'R') {
                     robot.driveLF.setTargetPosition(target);
                     robot.driveRF.setTargetPosition(-target);
                     robot.driveLB.setTargetPosition(-target);
@@ -104,7 +118,7 @@ public class Parking_Wobble_Auto extends LinearOpMode {
                 robot.driveRB.setPower(Math.abs(speed));
                 while (opModeIsActive() &&
                         (runtime.seconds() < TIMEOUT) &&
-                        (robot.driveLF.isBusy() && robot.driveRF.isBusy() && robot.driveRB.isBusy() &&  robot.driveLB.isBusy())) {
+                        (robot.driveLF.isBusy() && robot.driveRF.isBusy() && robot.driveRB.isBusy() && robot.driveLB.isBusy())) {
 
                     // Display it for the driver.
                     telemetry.addData("Path1", "Running to %7d :%7d", target, target);
@@ -149,9 +163,9 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         try {
             if (opModeIsActive()) {
                 // Determine new target position, and pass to motor controller
-                target =  (int) (ang * COUNTS_PER_DEGREE);
+                target = (int) (ang * COUNTS_PER_DEGREE);
                 // Decide which direction each motor should go
-                if(cWise) {
+                if (cWise) {
                     robot.driveLF.setTargetPosition(target);
                     robot.driveRF.setTargetPosition(-target);
                     robot.driveLB.setTargetPosition(target);
@@ -175,7 +189,7 @@ public class Parking_Wobble_Auto extends LinearOpMode {
                 robot.driveRB.setPower(Math.abs(speed));
                 while (opModeIsActive() &&
                         (runtime.seconds() < TIMEOUT) &&
-                        (robot.driveLF.isBusy() && robot.driveRF.isBusy() && robot.driveRB.isBusy() &&  robot.driveLB.isBusy())) {
+                        (robot.driveLF.isBusy() && robot.driveRF.isBusy() && robot.driveRB.isBusy() && robot.driveLB.isBusy())) {
 
                     // Display it for the driver.
                     telemetry.addData("Path1", "Running to %7d :%7d", target, target);
