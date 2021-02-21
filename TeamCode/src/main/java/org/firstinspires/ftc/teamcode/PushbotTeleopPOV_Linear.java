@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name="Pushbot: Teleop POV", group="Pushbot")
+@TeleOp(name = "Pushbot: Teleop POV", group = "Pushbot")
 public class PushbotTeleopPOV_Linear extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -68,10 +68,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             // Intake driven by bumpers
-            if(gamepad1.left_bumper) {
+            if (gamepad1.left_bumper) {
                 // Intake in
                 robot.intake.setPower(1.0);
-            } else if(gamepad1.right_bumper) {
+            } else if (gamepad1.right_bumper) {
                 // Intake out
                 robot.intake.setPower(-1.0);
             } else {
@@ -79,18 +79,18 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             // Arm driven by dpad left and right
-            if(gamepad1.dpad_left) {
+            if (gamepad1.dpad_left) {
                 robot.armMotor.setPower(.5);
-            } else if(gamepad1.dpad_right) {
+            } else if (gamepad1.dpad_right) {
                 robot.armMotor.setPower(-.5);
             } else {
                 robot.armMotor.setPower(0);
             }
 
             // Claw Controlled by dpad up and down
-            if(gamepad1.dpad_down) {
+            if (gamepad1.dpad_down) {
                 robot.openClaw(true);
-            } else if(gamepad1.dpad_up) {
+            } else if (gamepad1.dpad_up) {
                 robot.openClaw(false);
             }
 
@@ -101,18 +101,25 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             robot.launch(gamepad1.right_trigger > 0);
 
             // Ring lift driven by a and y
-            if(gamepad1.a) {
+            if (gamepad1.a) {
                 robot.lift.setPower(1);
-            } else if(gamepad1.y) {
+            } else if (gamepad1.y) {
                 robot.lift.setPower(-1);
             } else {
                 robot.lift.setPower(0);
+            }
+
+            // Barrel alignment driven by x and b
+            if (gamepad1.x) {
+                robot.barrel(true);
+            } else if (gamepad1.b) {
+                robot.barrel(false);
             }
         }
     }
 
 
-    void drive (boolean precise, boolean reverse){
+    void drive(boolean precise, boolean reverse) {
         double right_scaled = scaleMotor(right, precise);
         double left_scaled = scaleMotor(left, precise);
 
@@ -127,7 +134,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         robot.driveLF.setPower(left_scaled);
         robot.driveLB.setPower(left_scaled);
     }
-    double scaleMotor ( double num, boolean precise){
+
+    double scaleMotor(double num, boolean precise) {
         if (num == 0.0)
             return 0.0;
         //For precision mode

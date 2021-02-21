@@ -23,6 +23,8 @@ public class Pushbot_2020 {
     private Servo clawServo;
     public Servo pusherL;
     public Servo pusherR;
+    public Servo barrelServoL;
+    public Servo barrelServoR;
 
     static final double COUNTS_PER_MOTOR_REV = 537.6;    // eg: AndyMark Orbital 20 Motor Encoder from Video
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP AndyMark Orbital 20
@@ -48,6 +50,8 @@ public class Pushbot_2020 {
         pusherL = hwMap.get(Servo.class, "leftPushServo");
         pusherR = hwMap.get(Servo.class, "rightPushServo");
         clawServo = hwMap.get(Servo.class, "clawServo");
+        barrelServoL = hwMap.get(Servo.class, "barrelL");
+        barrelServoR = hwMap.get(Servo.class, "barrelR");
         // Define and Initialize Motors
         armMotor = hwMap.get(DcMotor.class, "armMotor");
         launchL = hwMap.get(DcMotor.class, "leftLaunch");
@@ -75,6 +79,8 @@ public class Pushbot_2020 {
         lift.setPower(0);
         clawServo.setPosition(0.4);
         launch(true);
+        barrelServoL.setPosition(-1);
+        barrelServoR.setPosition(1);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         driveLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -109,7 +115,7 @@ public class Pushbot_2020 {
     }
 
     public void rev(boolean on) {
-        if(on) {
+        if (on) {
             launchL.setPower(1.0);
             launchR.setPower(-1.0);
         } else {
@@ -119,7 +125,7 @@ public class Pushbot_2020 {
     }
 
     public void launch(boolean go) {
-        if(go) {
+        if (go) {
             pusherL.setPosition(1.0);
             pusherR.setPosition(-1.0);
         } else {
@@ -128,6 +134,15 @@ public class Pushbot_2020 {
         }
     }
 
+    public void barrel(boolean launchPos) {
+        if (launchPos) {
+            barrelServoL.setPosition(-.6667);
+            barrelServoR.setPosition(.6667);
+        } else {
+            barrelServoL.setPosition(-.3333);
+            barrelServoR.setPosition(.3333);
+        }
+    }
 
 
     public void encoderDrive(double speed,
