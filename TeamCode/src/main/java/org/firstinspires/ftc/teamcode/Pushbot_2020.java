@@ -16,12 +16,13 @@ public class Pushbot_2020 {
     public DcMotor driveLB;
     public DcMotor driveRB;
     public DcMotor intake;
-    //public CRServo testServo;
-    //public CRServo spool;
+    public DcMotor launchL;
+    public DcMotor launchR;
+    public CRServo lift;
     public DcMotor armMotor;
     private Servo clawServo;
-    //public Servo pusherL;
-    //public Servo pusherR;
+    public Servo pusherL;
+    public Servo pusherR;
 
     static final double COUNTS_PER_MOTOR_REV = 537.6;    // eg: AndyMark Orbital 20 Motor Encoder from Video
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP AndyMark Orbital 20
@@ -43,12 +44,14 @@ public class Pushbot_2020 {
         hwMap = ahwMap;
         //Define and Initialize servos
         //testServo = hwMap.get(CRServo.class, "testServo");
-        //spool = hwMap.get(CRServo.class, "spool");
-        armMotor = hwMap.get(DcMotor.class, "armMotor");
+        lift = hwMap.get(CRServo.class, "liftServo");
+        pusherL = hwMap.get(Servo.class, "leftPushServo");
+        pusherR = hwMap.get(Servo.class, "rightPushServo");
         clawServo = hwMap.get(Servo.class, "clawServo");
-        //pusherL = hwMap.get(Servo.class, "pusherL");
-        //pusherR = hwMap.get(Servo.class, "pusherR");
         // Define and Initialize Motors
+        armMotor = hwMap.get(DcMotor.class, "armMotor");
+        launchL = hwMap.get(DcMotor.class, "leftLaunch");
+        launchR = hwMap.get(DcMotor.class, "rightLaunch");
         driveLF = hwMap.get(DcMotor.class, "leftFrontDrive");
         driveRF = hwMap.get(DcMotor.class, "rightFrontDrive");
         driveLB = hwMap.get(DcMotor.class, "leftBackDrive");
@@ -61,18 +64,17 @@ public class Pushbot_2020 {
         driveRB.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         intake.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         // Set all motors to zero power
+        armMotor.setPower(0);
+        rev(false);
         driveLF.setPower(0);
         driveRF.setPower(0);
         driveRB.setPower(0);
         driveLB.setPower(0);
         intake.setPower(0);
         //set servo to starting position
-        //testServo.setPower(0.0);
-        //pool.setPower(0.0);
-        armMotor.setPower(0.0);
+        lift.setPower(0);
         clawServo.setPosition(0.4);
-        //pusherL.setPosition(0.0);
-        //pusherR.setPosition(0.0);
+        launch(true);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         driveLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -105,6 +107,28 @@ public class Pushbot_2020 {
             armMotor.setPower(0);
         }
     }
+
+    public void rev(boolean on) {
+        if(on) {
+            launchL.setPower(1.0);
+            launchR.setPower(-1.0);
+        } else {
+            launchR.setPower(0.0);
+            launchL.setPower(0.0);
+        }
+    }
+
+    public void launch(boolean go) {
+        if(go) {
+            pusherL.setPosition(1.0);
+            pusherR.setPosition(-1.0);
+        } else {
+            pusherL.setPosition(-0.1);
+            pusherR.setPosition(0.1);
+        }
+    }
+
+
 
     public void encoderDrive(double speed,
                              double dist, // in inches

@@ -67,153 +67,51 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.driveRB.setPower(v4);
             }
 
-            // Intake driven by right trigger
-            if(gamepad1.right_trigger > 0) {
+            // Intake driven by bumpers
+            if(gamepad1.left_bumper) {
+                // Intake in
                 robot.intake.setPower(1.0);
+            } else if(gamepad1.right_bumper) {
+                // Intake out
+                robot.intake.setPower(-1.0);
             } else {
                 robot.intake.setPower(0);
             }
 
-            if(gamepad1.a) {
+            // Arm driven by dpad left and right
+            if(gamepad1.dpad_left) {
                 robot.armMotor.setPower(.5);
-            } else if(gamepad1.b) {
+            } else if(gamepad1.dpad_right) {
                 robot.armMotor.setPower(-.5);
             } else {
                 robot.armMotor.setPower(0);
             }
 
-            // Claw Controlled by dpad down and
+            // Claw Controlled by dpad up and down
             if(gamepad1.dpad_down) {
                 robot.openClaw(true);
-            } else if(gamepad1.dpad_left) {
+            } else if(gamepad1.dpad_up) {
                 robot.openClaw(false);
             }
 
-            /*
-            //Continuous rotation of CRServo
-            if (gamepad1.a) {
-                robot.testServo.setPower(0.8);
+            // Rev driven by left trigger
+            robot.rev(gamepad1.left_trigger > 0);
+
+            // Launch driven by right trigger
+            robot.launch(gamepad1.right_trigger > 0);
+
+            // Ring lift driven by a and y
+            if(gamepad1.a) {
+                robot.lift.setPower(1);
+            } else if(gamepad1.y) {
+                robot.lift.setPower(-1);
+            } else {
+                robot.lift.setPower(0);
             }
-            if (gamepad1.b) {
-                robot.testServo.setPower(-0.8);
-            }
-            telemetry.update();
-             */
-
-            //foundation hook toggle
-            /*if (gamepad2.a && foundHook != 0) {
-                foundHook--;
-                sleep(300);
-            } else if (gamepad2.a) {
-                foundHook++;
-                sleep(300);
-            }
-
-            if (foundHook != 0) {
-                robot.foundHook1.setPosition(1.0);
-                robot.foundHook2.setPosition(0.0);
-            }
-            telemetry.addData("Raising foundation hooks", "true");
-            telemetry.update();
-
-            if (foundHook == 0) {
-                robot.foundHook1.setPosition(0.0);
-                robot.foundHook2.setPosition(1.0);
-            }
-            telemetry.addData("Lowering foundation hooks", "true");
-            telemetry.update();
-
-            //Controls linear actuator
-            // Show the elapsed game time and wheel powerhhy
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", right, left);
-            telemetry.update();
-
-            //linear actuator
-            robot.vertExt.setPower(gamepad2.left_stick_y);
-            telemetry.addData("Moving the linear actuator", "true");
-            telemetry.update();*/
-
-            /* old linear actuator code
-            if (gamepad2.dpad_up) {
-                robot.vertExt.setPower(-1);
-            } else if (gamepad2.dpad_down) {
-                robot.vertExt.setPower(1);
-            } else if (gamepad2.dpad_right) {
-                robot.vertExt.setPower(0);
-            */
-
-            //tape extender
-            /*robot.tapeExt.setPower(gamepad2.right_stick_y);
-            telemetry.addData("Moving the tape extender", "true");
-            telemetry.update();*/
-
-
-            // secondstone grabber mech
-            /*
-            if (gamepad1.dpad_up) {
-                robot.stoneClaw.setPower(-0.05);
-            } else if (gamepad1.dpad_down) {
-                robot.stoneClaw.setPower(0);
-            } else if (gamepad1.dpad_right) {
-                robot.stoneClaw.setPower(-0.001);
-            } else if (gamepad1.dpad_left) {
-                robot.stoneClaw.setPower(-.05);
-                sleep(700);
-                robot.stoneClaw.setPower(-.001);
-            }
-            */
-            //old Stone grabber Mech
-
-            /*if (gamepad1.right_bumper) {//Open complete
-                //robot.rightClaw.setPosition(0.65);
-                robot.rightClaw.setPosition(0.8);
-                //robot.leftClaw.setPosition(0.2); old
-                robot.leftClaw.setPosition(0.0);
-                telemetry.addData("Closing grabber", "true");
-                telemetry.update();
-            }
-            else if (gamepad1.left_bumper) {//Opened
-                //clawOffset = 0.0;
-                //inversely proportional
-                robot.rightClaw.setPosition(0.5);//WORKS PERFECTLY SRIJAN (GOOD JOB)
-                robot.leftClaw.setPosition(0.35);
-                telemetry.addData("Opening grabber moderate amount", "true");
-                telemetry.update();
-            }
-            else if (gamepad1.left_trigger != 0) {//CLOSED
-            //clawOffset = 0.0;
-            //inversely proportional
-                robot.rightClaw.setPosition(0.2);//WORKS PERFECTLY SRIJAN (GOOD JOB)
-                robot.leftClaw.setPosition(0.65);
-                telemetry.addData("Opening grabber large amount", "true");
-                telemetry.update();
-            }*/
-
-            //tuckawayclaw toggle
-            /*if (gamepad2.x && tuckAway != 0) {
-                tuckAway--;
-                sleep(300);
-            } else if (gamepad2.x) {
-                tuckAway++;
-                sleep(300);
-            }
-
-            if (tuckAway == 0) {
-                robot.tuckAwayClaw1.setPower(.8);
-                robot.tuckAwayClaw2.setPower(-.4);
-            }
-            telemetry.addData("moving tuckAway claw out", "true");
-            telemetry.update();
-
-            if (tuckAway != 0) {
-                robot.tuckAwayClaw1.setPower(-.5);
-                robot.tuckAwayClaw2.setPower(0.9);
-            }
-            telemetry.addData("moving tuckAway claw in", "true");
-            telemetry.update();*/
         }
     }
+
+
     void drive (boolean precise, boolean reverse){
         double right_scaled = scaleMotor(right, precise);
         double left_scaled = scaleMotor(left, precise);
