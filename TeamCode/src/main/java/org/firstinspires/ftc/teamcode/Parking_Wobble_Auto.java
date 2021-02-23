@@ -49,32 +49,21 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         sleep(500);
         robot.openClaw(false);
         sleep(500);
-        encoderDrive(.4, 108, 'F');
+        robot.encoderDrive(.4, 108, 'F');
         robot.openClaw(true);
         sleep(500);
         robot.armOut(false);
         sleep(500);
-        encoderDrive(.4, 66, 'B');
+        robot.encoderDrive(.4, 63, 'B');
         sleep(500);/*
-        robot.barrel(true);
-        sleep(500);
-        robot.rev(true);
-        sleep(2000);
-        for (int i = 0; i < 3; i++) {
-            robot.autoFire(i);
-            if (i < 2) {
-                encoderDrive(.4, 6.25, 'L');
-                sleep(500);
-            }
-        }
-        sleep(500);
-        robot.rev(false);*/
-        encoderDrive(.4, 18, 'F');
+        robot.autoFire('R');
+        sleep(1000);*/
+        robot.encoderDrive(.4, 18, 'F');
     }
-
+/*
     public void encoderDrive(double speed,
                              double dist, // in inches
-                             char dir /*Options: F, B, L, R*/) {
+                             char dir ) {
         int TIMEOUT = 10;
 
         int target;
@@ -221,5 +210,5 @@ public class Parking_Wobble_Auto extends LinearOpMode {
             telemetry.addData("Mission Failed", "We'll get 'em next time: ");
             telemetry.update();
         }
-    }
+    }*/
 }

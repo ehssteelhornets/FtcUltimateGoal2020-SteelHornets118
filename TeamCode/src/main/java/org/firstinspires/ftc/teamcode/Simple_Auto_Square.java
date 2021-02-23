@@ -43,26 +43,26 @@ public class Simple_Auto_Square extends LinearOpMode {
         telemetry.update();
         waitForStart();
         // Drives in a 10" square and spins a couple times
-        encoderDrive(0.3, 10, 'F');
+        robot.encoderDrive(0.3, 10, 'F');
         sleep(1000);
-        encoderDrive(0.3, 10,'L');
+        robot.encoderDrive(0.3, 10,'L');
         sleep(1000);
-        encoderDrive(0.3, 10, 'B');
+        robot.encoderDrive(0.3, 10, 'B');
         sleep(1000);
-        encoderDrive(0.3,10,'R');
+        robot.encoderDrive(0.3,10,'R');
         sleep(1000);
-        encoderTurn(.3, 360, true);
+        robot.encoderTurn(.3, 360, true);
         sleep(1000);
-        encoderTurn(.3, 90, false);
+        robot.encoderTurn(.3, 90, false);
         sleep(1000);
-        encoderTurn(.3, 180, true);
+        robot.encoderTurn(.3, 180, true);
         sleep(1000);
-        encoderTurn(.3, 90, false);
+        robot.encoderTurn(.3, 90, false);
     }
-
+/*
     public void encoderDrive(double speed,
                          double dist, // in inches
-                         char dir /*Options: F, B, L, R*/) {
+                         char dir ) { // Options for dir: F, B, L, R
         int TIMEOUT = 10;
 
         int target;
@@ -209,5 +209,5 @@ public class Simple_Auto_Square extends LinearOpMode {
             telemetry.addData("Mission Failed", "We'll get 'em next time: " + test);
             telemetry.update();
         }
-    }
+    }*/
 }
