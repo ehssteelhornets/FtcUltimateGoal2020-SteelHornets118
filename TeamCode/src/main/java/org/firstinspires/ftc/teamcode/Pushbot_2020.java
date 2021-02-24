@@ -148,19 +148,76 @@ public class Pushbot_2020 {
         lift.setPower(-1);
     }
 
-    public void autoFire(int launchNum){
+    public void autoFire(char target) {
+        barrel(true);
+        rev(true);
         runtime.reset();
-        while(runtime.seconds() < .5) {
-            launch(true);
-        } runtime.reset();
-        while(runtime.seconds() < .5) {
-            launch(false);
+        while (runtime.seconds() < 2) {
+            rev(true);
         }
+        if (target == 'T') { // Tower AutoFire
+            for (int i = 0; i < 3; i++) {
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(true);
+                }
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(false);
+                }
+                if (i < 2) {
+                    runtime.reset();
+                    while (runtime.seconds() < 1) {
+                        lift.setPower(-1);
+                    }
+                    lift.setPower(0);
+                }
+            }
+        } else if (target == 'R') { // Red Side AutoFire
+            for (int i = 0; i < 3; i++) {
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(true);
+                }
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(false);
+                }
+                if (i < 2) {
+                    runtime.reset();
+                    while (runtime.seconds() < 1) {
+                        lift.setPower(-1);
+                    }
+                    lift.setPower(0);
+                    encoderDrive(.4, 6, 'L');
+                }
+            }
+        } else if (target == 'B') { // Blue Side AutoFire
+            for (int i = 0; i < 3; i++) {
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(true);
+                }
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(false);
+                }
+                if (i < 2) {
+                    runtime.reset();
+                    while (runtime.seconds() < 1) {
+                        lift.setPower(-1);
+                    }
+                    lift.setPower(0);
+                    encoderDrive(.4, 6, 'R');
+                }
+            }
+        }
+        rev(false);
         runtime.reset();
-        while (runtime.seconds() < 1) {
-            lift.setPower(-1);
+        while (runtime.seconds() < 2) {
+            rev(false);
         }
-        lift.setPower(0);
+        barrel(false);
     }
 
 
