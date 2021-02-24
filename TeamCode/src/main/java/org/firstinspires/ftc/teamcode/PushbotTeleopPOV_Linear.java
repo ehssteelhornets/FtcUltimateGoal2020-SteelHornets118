@@ -110,9 +110,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
             // Barrel alignment driven by x and b
-            if (gamepad1.x) {
+            if (gamepad1.b) {
                 robot.barrel(true);
-            } else if (gamepad1.b) {
+            } else if (gamepad1.x) {
                 robot.barrel(false);
             }
         }
