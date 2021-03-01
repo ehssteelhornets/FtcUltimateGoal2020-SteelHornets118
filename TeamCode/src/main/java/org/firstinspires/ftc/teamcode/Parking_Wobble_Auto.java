@@ -26,8 +26,8 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         //Initializes the robot
         robot.init(hardwareMap);
         //Reset our encoders
-        telemetry.addData("Status", "Resetting Encoders");
-        telemetry.update();
+        //telemetry.addData("Status", "Resetting Encoders");
+        //telemetry.update();
         robot.driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -37,10 +37,10 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.driveLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.driveRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0", "Starting at %7d :%7d",
+        /*telemetry.addData("Path0", "Starting at %7d :%7d",
                 robot.driveLF.getCurrentPosition(),
                 robot.driveRF.getCurrentPosition());
-        telemetry.update();
+        telemetry.update();*/
         waitForStart();
 
         robot.openClaw(true);
@@ -54,13 +54,13 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         sleep(500);
         robot.armOut(false);
         sleep(500);
-        robot.encoderDrive(.4, 63, 'B');
+        encoderDrive(.4, 63, 'B');
         sleep(500);/*
         robot.autoFire('R');
         sleep(1000);*/
-        robot.encoderDrive(.4, 18, 'F');
+        encoderDrive(.4, 18, 'F');
     }
-/*
+
     public void encoderDrive(double speed,
                              double dist, // in inches
                              char dir ) {
@@ -210,5 +210,5 @@ public class Parking_Wobble_Auto extends LinearOpMode {
             telemetry.addData("Mission Failed", "We'll get 'em next time: ");
             telemetry.update();
         }
-    }*/
+    }
 }

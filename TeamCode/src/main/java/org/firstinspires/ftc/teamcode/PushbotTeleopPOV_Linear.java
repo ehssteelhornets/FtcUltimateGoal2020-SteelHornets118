@@ -70,10 +70,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             // Intake driven by bumpers
             if (gamepad1.left_bumper) {
                 // Intake in
-                robot.intake.setPower(1.0);
+                robot.intake.setPower(.7);
             } else if (gamepad1.right_bumper) {
                 // Intake out
-                robot.intake.setPower(-1.0);
+                robot.intake.setPower(-.7);
             } else {
                 robot.intake.setPower(0);
             }

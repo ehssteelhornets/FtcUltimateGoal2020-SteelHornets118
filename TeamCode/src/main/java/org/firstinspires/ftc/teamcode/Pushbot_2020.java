@@ -79,8 +79,8 @@ public class Pushbot_2020 {
         lift.setPower(0);
         clawServo.setPosition(0.4);
         launch(true);
-        barrelServoL.setPosition(.9);
-        barrelServoR.setPosition(.3);
+        barrelServoL.setPosition(.6);
+        barrelServoR.setPosition(.4);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         driveLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -116,8 +116,8 @@ public class Pushbot_2020 {
 
     public void rev(boolean on) {
         if (on) {
-            launchL.setPower(1.0);
-            launchR.setPower(-1.0);
+            launchL.setPower(.8);
+            launchR.setPower(-.8);
         } else {
             launchR.setPower(0.0);
             launchL.setPower(0.0);
@@ -126,21 +126,21 @@ public class Pushbot_2020 {
 
     public void launch(boolean go) {
         if (go) {
-            pusherL.setPosition(-1.0);
-            pusherR.setPosition(1.0);
+            pusherL.setPosition(0.5);
+            pusherR.setPosition(0.5);
         } else {
-            pusherL.setPosition(0.7);
-            pusherR.setPosition(-0.7);
+            pusherL.setPosition(0);
+            pusherR.setPosition(1.0);
         }
     }
 
     public void barrel(boolean launchPos) {
         if (launchPos) {
-            barrelServoL.setPosition(.5);
-            barrelServoR.setPosition(.4);
+            barrelServoR.setPosition(.65);
+            barrelServoL.setPosition(.35);
         } else {
-            barrelServoL.setPosition(-1);
-            barrelServoR.setPosition(1);
+            barrelServoR.setPosition(.8);
+            barrelServoL.setPosition(.2);
         }
     }
 
