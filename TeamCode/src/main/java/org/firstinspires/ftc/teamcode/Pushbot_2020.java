@@ -134,13 +134,19 @@ public class Pushbot_2020 {
         }
     }
 
-    public void barrel(boolean launchPos) {
-        if (launchPos) {
+    public void barrel(int pos) {
+        if (pos == 0) {
+            // Ring Pickup Position
+            barrelServoR.setPosition(1);
+            barrelServoL.setPosition(0);
+        } else if (pos == 1) {
+            // Power Shot Position
+            barrelServoR.setPosition(.8);
+            barrelServoL.setPosition(.2);
+        } else if (pos == 2) {
+            // High Goal Position
             barrelServoR.setPosition(.675);
             barrelServoL.setPosition(.325);
-        } else {
-            barrelServoR.setPosition(1); //.8
-            barrelServoL.setPosition(0); //.2
         }
     }
 
@@ -149,7 +155,7 @@ public class Pushbot_2020 {
     }
 
     public void autoFire(char target) {
-        barrel(true);
+        barrel(1);
         rev(true);
         runtime.reset();
         while (runtime.seconds() < 2) {
@@ -176,6 +182,10 @@ public class Pushbot_2020 {
         } else if (target == 'R') { // Red Side AutoFire
             for (int i = 0; i < 3; i++) {
                 runtime.reset();
+                while(runtime.seconds() < 2) {
+                    lift.setPower(0);
+                }
+                /*
                 while (runtime.seconds() < .5) {
                     launch(true);
                 }
@@ -183,11 +193,14 @@ public class Pushbot_2020 {
                 while (runtime.seconds() < .5) {
                     launch(false);
                 }
+                 */
                 if (i < 2) {
+                    /*
                     runtime.reset();
                     while (runtime.seconds() < 1) {
                         lift.setPower(-1);
                     }
+                     */
                     lift.setPower(0);
                     encoderDrive(.4, 6, 'L');
                 }
@@ -217,7 +230,7 @@ public class Pushbot_2020 {
         while (runtime.seconds() < 2) {
             rev(false);
         }
-        barrel(false);
+        barrel(0);
     }
 
 

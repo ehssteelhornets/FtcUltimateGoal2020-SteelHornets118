@@ -55,9 +55,9 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.armOut(false);
         sleep(500);
         encoderDrive(.4, 63, 'B');
-        sleep(500);/*
+        sleep(500);
         robot.autoFire('R');
-        sleep(1000);*/
+        sleep(1000);
         encoderDrive(.4, 18, 'F');
     }
 
