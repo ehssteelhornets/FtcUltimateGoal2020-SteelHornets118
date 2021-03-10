@@ -8,11 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Pushbot: Teleop POV", group = "Pushbot")
 public class PushbotTeleopPOV_Linear extends LinearOpMode {
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private static double right;
-    private static double left;
-    private static double right2;
-    private static double left2;
+    private final ElapsedTime runtime = new ElapsedTime();
     Pushbot_2020 robot = new Pushbot_2020();
 
     @Override
@@ -24,43 +20,39 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
-        // run until the end of the match (driver presses STOP)
-        int mode = 1;
+        boolean precisionMode = false;
         telemetry.addData("opModeIsActive", opModeIsActive());
         telemetry.update();
+        // Run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.update();
-            if (gamepad1.right_stick_button && mode == 1) {
-                mode++;
-                sleep(100);
-            } else if (gamepad1.right_stick_button && mode == 2) {
-                mode--;
+
+            // Select mode
+            if (gamepad1.right_stick_button) {
+                precisionMode = !precisionMode;
                 sleep(100);
             }
-            //Tank Drive
-            if (mode == 2) {
+
+            double r = Math.hypot(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+            double robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            double rightX = gamepad1.right_stick_x;
+            final double v1 = r * Math.cos(robotAngle) + rightX;
+            final double v2 = r * Math.sin(robotAngle) - rightX;
+            final double v3 = r * Math.sin(robotAngle) + rightX;
+            final double v4 = r * Math.cos(robotAngle) - rightX;
+
+            // Precision Mode
+            if (precisionMode) {
                 telemetry.addData("Driving", "false");
                 telemetry.update();
-                right = gamepad1.right_stick_y;
-                left = gamepad1.left_stick_y;
-                boolean precisionMode = false;
-                if (gamepad1.left_trigger != 0)
-                    precisionMode = true;
-                boolean reverseMode = false;
-                if (gamepad1.right_trigger != 0)
-                    reverseMode = true;
-                drive(precisionMode, reverseMode);
-            } else if (mode == 1) {
-                //Mech Drive
+                robot.driveLF.setPower(v1/4);
+                robot.driveRF.setPower(v2/4);
+                robot.driveLB.setPower(v3/4);
+                robot.driveRB.setPower(v4/4);
+            } else {
+                // Normal Mode
                 telemetry.addData("Driving", "true");
                 telemetry.update();
-                double r = Math.hypot(gamepad1.left_stick_x, -gamepad1.left_stick_y);
-                double robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-                double rightX = gamepad1.right_stick_x;
-                final double v1 = r * Math.cos(robotAngle) + rightX;
-                final double v2 = r * Math.sin(robotAngle) - rightX;
-                final double v3 = r * Math.sin(robotAngle) + rightX;
-                final double v4 = r * Math.cos(robotAngle) - rightX;
                 robot.driveLF.setPower(v1);
                 robot.driveRF.setPower(v2);
                 robot.driveLB.setPower(v3);
@@ -116,41 +108,5 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.barrel(false);
             }
         }
-    }
-
-
-    void drive(boolean precise, boolean reverse) {
-        double right_scaled = scaleMotor(right, precise);
-        double left_scaled = scaleMotor(left, precise);
-
-        if (reverse) {
-            double temp = right_scaled;
-            right_scaled = -left_scaled;
-            left_scaled = -temp;
-        }
-        //Set power for motors
-        robot.driveRF.setPower(right_scaled);
-        robot.driveRB.setPower(right_scaled);
-        robot.driveLF.setPower(left_scaled);
-        robot.driveLB.setPower(left_scaled);
-    }
-
-    double scaleMotor(double num, boolean precise) {
-        if (num == 0.0)
-            return 0.0;
-        //For precision mode
-        double[] scaleArray = {0.5, 0.75, 1.0};
-        double[] preciseArray = {0.1, 0.2, 0.3};
-        // get the corresponding index for the scaleInput array.
-        int index = (int) (num * (scaleArray.length - 1));
-        index = Math.abs(index);
-        double scaled;
-        if (precise)
-            scaled = preciseArray[index];
-        else
-            scaled = scaleArray[index];
-        if (num < 0.0)
-            scaled = -scaled;
-        return scaled;
     }
 }
