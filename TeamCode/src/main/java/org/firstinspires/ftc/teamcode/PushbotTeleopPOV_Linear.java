@@ -102,9 +102,9 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // Ring lift driven by a and y
             if (gamepad1.a) {
-                robot.lift.setPower(1);
-            } else if (gamepad1.y) {
                 robot.lift.setPower(-1);
+            } else if (gamepad1.y) {
+                robot.lift.setPower(1);
             } else {
                 robot.lift.setPower(0);
             }

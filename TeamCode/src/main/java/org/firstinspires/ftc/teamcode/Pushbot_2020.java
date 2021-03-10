@@ -78,7 +78,7 @@ public class Pushbot_2020 {
         //set servo to starting position
         lift.setPower(0);
         clawServo.setPosition(0.4);
-        launch(true);
+        launch(false);
         barrelServoL.setPosition(.6);
         barrelServoR.setPosition(.4);
         // Set all motors to run without encoders.
@@ -129,18 +129,18 @@ public class Pushbot_2020 {
             pusherL.setPosition(0.5);
             pusherR.setPosition(0.5);
         } else {
-            pusherL.setPosition(0);
-            pusherR.setPosition(1.0);
+            pusherL.setPosition(1.0);
+            pusherR.setPosition(0.025);
         }
     }
 
     public void barrel(boolean launchPos) {
         if (launchPos) {
-            barrelServoR.setPosition(.65);
-            barrelServoL.setPosition(.35);
+            barrelServoR.setPosition(.675);
+            barrelServoL.setPosition(.325);
         } else {
-            barrelServoR.setPosition(.8);
-            barrelServoL.setPosition(.2);
+            barrelServoR.setPosition(1); //.8
+            barrelServoL.setPosition(0); //.2
         }
     }
 
