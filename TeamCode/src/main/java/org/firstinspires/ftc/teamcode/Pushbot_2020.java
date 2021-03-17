@@ -116,8 +116,8 @@ public class Pushbot_2020 {
 
     public void rev(boolean on) {
         if (on) {
-            launchL.setPower(.8);
-            launchR.setPower(-.8);
+            launchL.setPower(.75);
+            launchR.setPower(-.75);
         } else {
             launchR.setPower(0.0);
             launchL.setPower(0.0);
@@ -126,8 +126,8 @@ public class Pushbot_2020 {
 
     public void launch(boolean go) {
         if (go) {
-            pusherL.setPosition(0.5);
-            pusherR.setPosition(0.5);
+            pusherL.setPosition(0.25);
+            pusherR.setPosition(0.25);
         } else {
             pusherL.setPosition(1.0);
             pusherR.setPosition(0.025);
@@ -145,8 +145,8 @@ public class Pushbot_2020 {
             barrelServoL.setPosition(.2);
         } else if (pos == 2) {
             // High Goal Position
-            barrelServoR.setPosition(.675);
-            barrelServoL.setPosition(.325);
+            barrelServoR.setPosition(.7);
+            barrelServoL.setPosition(.3);
         }
     }
 

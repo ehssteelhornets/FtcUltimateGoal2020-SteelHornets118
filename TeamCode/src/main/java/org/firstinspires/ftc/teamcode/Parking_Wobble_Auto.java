@@ -44,21 +44,60 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         waitForStart();
 
         robot.openClaw(true);
-        sleep(500);
         robot.armOut(true);
         sleep(500);
         robot.openClaw(false);
-        sleep(500);
-        encoderDrive(.4, 108, 'F');
+        sleep(250);
+        encoderDrive(.7, 108, 'F');
         robot.openClaw(true);
+        sleep(100);
+        robot.armOut(false);
+        sleep(250);
+        encoderDrive(.7, 63, 'B');
+        sleep(250);
+        encoderTurn(.4,10,false);
+        //robot.autoFire('R');
+        for (int i = 0; i < 3; i++) {
+            sleep(250);
+                /*
+                while (runtime.seconds() < .5) {
+                    launch(true);
+                }
+                runtime.reset();
+                while (runtime.seconds() < .5) {
+                    launch(false);
+                }
+                 */
+            if (i > 0) {
+                    /*
+                    runtime.reset();
+                    while (runtime.seconds() < 1) {
+                        lift.setPower(-1);
+                    }
+                     */
+                robot.lift.setPower(0);
+                encoderDrive(.4, 12, 'L');
+            }
+        }
         sleep(500);
+        encoderDrive(.7, 40, 'B');
+        encoderDrive(.2,8,'B');
+        sleep(500);
+        encoderDrive(.7,10,'L');
+        encoderDrive(.2,5,'L');
+        sleep(500);
+        encoderDrive(.4,24,'F');
+        robot.armOut(true);
+        sleep(500);
+        encoderDrive(.4, 54, 'R');
+        robot.openClaw(false);
+        sleep(500);
+        encoderDrive(.4, 12, 'L');
+        encoderDrive(.4,84,'F');
+        robot.openClaw(true);
         robot.armOut(false);
         sleep(500);
-        encoderDrive(.4, 63, 'B');
-        sleep(500);
-        robot.autoFire('R');
-        sleep(1000);
-        encoderDrive(.4, 18, 'F');
+        encoderDrive(.4,48,'B');
     }
 
     public void encoderDrive(double speed,
