@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.exception.TargetPositionNotSetException;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -7,6 +8,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 
@@ -25,12 +29,22 @@ public class Pushbot_2020 {
     public Servo pusherR;
     public Servo barrelServoL;
     public Servo barrelServoR;
+    public ModernRoboticsI2cRangeSensor liftSensor;
 
     static final double COUNTS_PER_MOTOR_REV = 537.6;    // eg: AndyMark Orbital 20 Motor Encoder from Video
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP AndyMark Orbital 20
     static final double WHEEL_DIAMETER_INCHES = 3.75;     // For figuring circumference
     static final double WHEEL_CIRCUMFERENCE_INCHES = (WHEEL_DIAMETER_INCHES * Math.PI);
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
+
+    // Set lift variables
+    final int up = -1;
+    // Positions are the number of inches between the range sensor and the bottom of the lift
+    final double p0 = 5;    // Intake position
+    final double p1 = 2.25; // Launch position for 3 rings
+    final double p2 = 1.5;  // Launch position for 2 rings
+    final double p3 = .75;  // Launch position for 1 ring
+    int liftPos = 1;
 
     /* local OpMode members. */
     HardwareMap hwMap;
@@ -61,6 +75,8 @@ public class Pushbot_2020 {
         driveLB = hwMap.get(DcMotor.class, "leftBackDrive");
         driveRB = hwMap.get(DcMotor.class, "rightBackDrive");
         intake = hwMap.get(DcMotor.class, "intake");
+        // Define and Initialize sensors
+        liftSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "liftSensor");
         // Set motor direction
         driveLF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         driveRF.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
@@ -150,6 +166,30 @@ public class Pushbot_2020 {
         }
     }
 
+    public  void liftDown() {
+        liftPos = 0;
+        while(liftSensor.getDistance(DistanceUnit.INCH) < p0) {
+            lift.setPower(-1.0 * up);
+        }
+    }
+
+    public void liftUp() {
+        liftPos++;
+        if (liftPos == 1) {
+            while(liftSensor.getDistance(DistanceUnit.INCH) > p1) {
+                lift.setPower(1.0 * up);
+            }
+        } else if (liftPos == 2) {
+            while(liftSensor.getDistance(DistanceUnit.INCH) > p2) {
+                lift.setPower(1.0 * up);
+            }
+        } else if (liftPos == 3) {
+            while(liftSensor.getDistance(DistanceUnit.INCH) > p3) {
+                lift.setPower(1.0 * up);
+            }
+        }
+    }
+
     public void load() {
         lift.setPower(-1);
     }
@@ -182,7 +222,7 @@ public class Pushbot_2020 {
         } else if (target == 'R') { // Red Side AutoFire
             for (int i = 0; i < 3; i++) {
                 runtime.reset();
-                while(runtime.seconds() < 2) {
+                while (runtime.seconds() < 2) {
                     lift.setPower(0);
                 }
                 /*

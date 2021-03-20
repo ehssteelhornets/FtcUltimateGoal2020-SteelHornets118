@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.hardware.Sensor;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @TeleOp(name = "Pushbot: Teleop POV", group = "Pushbot")
@@ -10,6 +14,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
     Pushbot_2020 robot = new Pushbot_2020();
+    int liftPos = 1;
 
     @Override
     public void runOpMode() {
@@ -95,8 +100,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             // Ring lift driven by a and y
             if (gamepad1.a) {
                 robot.lift.setPower(1);
+                //robot.liftDown();
             } else if (gamepad1.y) {
                 robot.lift.setPower(-1);
+                //robot.liftUp();
             } else {
                 robot.lift.setPower(0);
             }
@@ -111,6 +118,13 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                     robot.barrel(0);
                 }
             }
+
+            // Get range sensor data
+            telemetry.addData("raw ultrasonic", robot.liftSensor.rawUltrasonic());
+            telemetry.addData("raw optical", robot.liftSensor.rawOptical());
+            telemetry.addData("cm optical", "%.2f cm", robot.liftSensor.cmOptical());
+            telemetry.addData("cm", "%.2f cm", robot.liftSensor.getDistance(DistanceUnit.CM));
+            telemetry.update();
         }
     }
 }
