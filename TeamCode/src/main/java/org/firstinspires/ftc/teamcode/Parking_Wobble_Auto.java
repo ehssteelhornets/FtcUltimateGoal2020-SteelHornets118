@@ -49,15 +49,18 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.openClaw(false);
         sleep(250);
         encoderDrive(.7, 108, 'F');
+        encoderDrive(.4,12,'R');
         robot.openClaw(true);
         sleep(100);
         robot.armOut(false);
+        encoderDrive(.7,10,'L');
         sleep(250);
-        encoderDrive(.7, 63, 'B');
+        encoderDrive(.7, 45, 'B');
         sleep(250);
         encoderTurn(.4,10,false);
+        sleep(1000);
         //robot.autoFire('R');
-        for (int i = 0; i < 3; i++) {
+        /*for (int i = 0; i < 3; i++) {
             sleep(250);
                 /*
                 while (runtime.seconds() < .5) {
@@ -67,37 +70,39 @@ public class Parking_Wobble_Auto extends LinearOpMode {
                 while (runtime.seconds() < .5) {
                     launch(false);
                 }
-                 */
+
             if (i > 0) {
                     /*
                     runtime.reset();
                     while (runtime.seconds() < 1) {
                         lift.setPower(-1);
                     }
-                     */
+
                 robot.lift.setPower(0);
                 encoderDrive(.4, 12, 'L');
             }
-        }
-        sleep(500);
-        encoderDrive(.7, 40, 'B');
-        encoderDrive(.2,8,'B');
-        sleep(500);
-        encoderDrive(.7,10,'L');
-        encoderDrive(.2,5,'L');
-        sleep(500);
-        encoderDrive(.4,24,'F');
+        }*/
+        sleep(250);
+        encoderDrive(.7, 36,'B');
+        /*encoderDrive(.7, 45, 'B'); Wall Grounding
+        encoderDrive(.4,10,'B');
+        sleep(250);
+        encoderDrive(.7,45,'L');
+        encoderDrive(.4,10,'L');
+        sleep(250);
+        encoderDrive(.7,17,'F');*/
         robot.armOut(true);
-        sleep(500);
-        encoderDrive(.4, 54, 'R');
+        sleep(250);
+        encoderDrive(.4, 28, 'R');
         robot.openClaw(false);
-        sleep(500);
-        encoderDrive(.4, 12, 'L');
-        encoderDrive(.4,84,'F');
+        sleep(250);
+        encoderDrive(.7, 24, 'L');
+        encoderDrive(.7,84,'F');
         robot.openClaw(true);
+        sleep(200);
         robot.armOut(false);
-        sleep(500);
-        encoderDrive(.4,48,'B');
+        sleep(250);
+        encoderDrive(.7,34,'B');
     }
 
     public void encoderDrive(double speed,
