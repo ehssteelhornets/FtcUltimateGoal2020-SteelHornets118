@@ -40,10 +40,10 @@ public class Pushbot_2020 {
     // Set lift variables
     final int up = -1;
     // Positions are the number of inches between the range sensor and the bottom of the lift
-    final double p0 = 5;    // Intake position
-    final double p1 = 2.25; // Launch position for 3 rings
-    final double p2 = 1.5;  // Launch position for 2 rings
-    final double p3 = .75;  // Launch position for 1 ring
+    final double p0 = 3.9;    // Intake position
+    final double p1 = 2.76; // Launch position for 3 rings
+    final double p2 = 1.97;  // Launch position for 2 rings
+    final double p3 = 1.57;  // Launch position for 1 ring
     int liftPos = 1;
 
     /* local OpMode members. */
@@ -76,7 +76,7 @@ public class Pushbot_2020 {
         driveRB = hwMap.get(DcMotor.class, "rightBackDrive");
         intake = hwMap.get(DcMotor.class, "intake");
         // Define and Initialize sensors
-        liftSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "liftSensor");
+        liftSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "liftSensor");
         // Set motor direction
         driveLF.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         driveRF.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors

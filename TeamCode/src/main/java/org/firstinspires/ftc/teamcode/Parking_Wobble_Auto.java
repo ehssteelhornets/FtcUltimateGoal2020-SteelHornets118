@@ -59,29 +59,18 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         sleep(250);
         encoderTurn(.4,10,false);
         sleep(1000);
-        //robot.autoFire('R');
-        /*for (int i = 0; i < 3; i++) {
-            sleep(250);
-                /*
-                while (runtime.seconds() < .5) {
-                    launch(true);
-                }
-                runtime.reset();
-                while (runtime.seconds() < .5) {
-                    launch(false);
-                }
-
+        robot.barrel(1);
+        robot.rev(true);
+        sleep(2000);
+        for (int i = 0; i < 3; i++) {
             if (i > 0) {
-                    /*
-                    runtime.reset();
-                    while (runtime.seconds() < 1) {
-                        lift.setPower(-1);
-                    }
-
-                robot.lift.setPower(0);
                 encoderDrive(.4, 12, 'L');
+                robot.liftUp();
             }
-        }*/
+            robot.launch(true);
+            sleep(150);
+        }
+        robot.rev(false);
         sleep(250);
         encoderDrive(.7, 36,'B');
         /*encoderDrive(.7, 45, 'B'); Wall Grounding
@@ -103,6 +92,7 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.armOut(false);
         sleep(250);
         encoderDrive(.7,34,'B');
+        robot.barrel(0);
     }
 
     public void encoderDrive(double speed,

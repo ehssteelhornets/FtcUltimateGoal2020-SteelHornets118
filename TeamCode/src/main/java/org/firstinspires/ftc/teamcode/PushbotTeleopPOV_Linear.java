@@ -30,7 +30,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         telemetry.update();
         // Run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            telemetry.update();
+            //telemetry.update();
 
 
             //Gamepad 1: Claw, Intake, Rev, Shoot, Drive, Precision Mode
@@ -70,16 +70,16 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // Precision Mode
             if (precisionMode) {
-                telemetry.addData("Driving", "false");
-                telemetry.update();
+                //telemetry.addData("Driving", "false");
+                //telemetry.update();
                 robot.driveLF.setPower(v1 / 4);
                 robot.driveRF.setPower(v2 / 4);
                 robot.driveLB.setPower(v3 / 4);
                 robot.driveRB.setPower(v4 / 4);
             } else {
                 // Normal Mode
-                telemetry.addData("Driving", "true");
-                telemetry.update();
+                //telemetry.addData("Driving", "true");
+                //telemetry.update();
                 robot.driveLF.setPower(v1);
                 robot.driveRF.setPower(v2);
                 robot.driveLB.setPower(v3);
@@ -98,20 +98,20 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
 
             // Arm driven by bumpers
             if (gamepad2.left_bumper) {
-                robot.armMotor.setPower(.5);
-            } else if (gamepad2.right_bumper) {
                 robot.armMotor.setPower(-.5);
+            } else if (gamepad2.right_bumper) {
+                robot.armMotor.setPower(.5);
             } else {
                 robot.armMotor.setPower(0);
             }
 
             // Ring lift driven by dpad up and down
             if (gamepad2.dpad_up) {
-                robot.lift.setPower(-1);
-                //robot.liftUp();
+                //robot.lift.setPower(-1);
+                robot.liftUp();
             } else if (gamepad2.dpad_down) {
-                robot.lift.setPower(1);
-                //robot.liftDown();
+                //robot.lift.setPower(1);
+                robot.liftDown();
             } else {
                 robot.lift.setPower(0);
             }
@@ -124,13 +124,12 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             } else if (gamepad2.a) {
                 robot.barrel(0);
             }
+            // Get range sensor data
+            telemetry.addData("raw ultrasonic", robot.liftSensor.rawUltrasonic());
+            telemetry.addData("raw optical", robot.liftSensor.rawOptical());
+            telemetry.addData("cm optical", "%.2f cm", robot.liftSensor.cmOptical());
+            telemetry.addData("in", "%.2f in", robot.liftSensor.getDistance(DistanceUnit.INCH));
+            telemetry.update();
         }
-
-        // Get range sensor data
-        telemetry.addData("raw ultrasonic", robot.liftSensor.rawUltrasonic());
-        telemetry.addData("raw optical", robot.liftSensor.rawOptical());
-        telemetry.addData("cm optical", "%.2f cm", robot.liftSensor.cmOptical());
-        telemetry.addData("cm", "%.2f cm", robot.liftSensor.getDistance(DistanceUnit.CM));
-        telemetry.update();
     }
 }
