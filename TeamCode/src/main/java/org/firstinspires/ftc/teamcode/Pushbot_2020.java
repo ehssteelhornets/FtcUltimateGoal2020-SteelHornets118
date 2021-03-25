@@ -40,10 +40,10 @@ public class Pushbot_2020 {
     // Set lift variables
     final int up = -1;
     // Positions are the number of inches between the range sensor and the bottom of the lift
-    final double p0 = 3.9;    // Intake position
-    final double p1 = 2.76; // Launch position for 3 rings
-    final double p2 = 1.97;  // Launch position for 2 rings
-    final double p3 = 1.57;  // Launch position for 1 ring
+    final double p0 = 10;    // Intake position
+    final double p1 = 7; // Launch position for 3 rings
+    final double p2 = 5;  // Launch position for 2 rings
+    final double p3 = 3;  // Launch position for 1 ring
     int liftPos = 1;
 
     /* local OpMode members. */
@@ -166,26 +166,26 @@ public class Pushbot_2020 {
         }
     }
 
-    public  void liftDown() {
+    public  void liftDown(double speed) {
         liftPos = 0;
-        while(liftSensor.getDistance(DistanceUnit.INCH) < p0) {
-            lift.setPower(-1.0 * up);
+        while(liftSensor.getDistance(DistanceUnit.CM) < p0) {
+            lift.setPower(-1 * speed * up);
         }
     }
 
-    public void liftUp() {
+    public void liftUp(double speed) {
         liftPos++;
         if (liftPos == 1) {
-            while(liftSensor.getDistance(DistanceUnit.INCH) > p1) {
-                lift.setPower(1.0 * up);
+            while(liftSensor.getDistance(DistanceUnit.CM) > p1) {
+                lift.setPower(speed * up);
             }
         } else if (liftPos == 2) {
-            while(liftSensor.getDistance(DistanceUnit.INCH) > p2) {
-                lift.setPower(1.0 * up);
+            while(liftSensor.getDistance(DistanceUnit.CM) > p2) {
+                lift.setPower(speed * up);
             }
         } else if (liftPos == 3) {
-            while(liftSensor.getDistance(DistanceUnit.INCH) > p3) {
-                lift.setPower(1.0 * up);
+            while(liftSensor.getDistance(DistanceUnit.CM) > p3) {
+                lift.setPower(speed * up);
             }
         }
     }

@@ -108,10 +108,10 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             // Ring lift driven by dpad up and down
             if (gamepad2.dpad_up) {
                 //robot.lift.setPower(-1);
-                robot.liftUp();
+                robot.liftUp(1.0);
             } else if (gamepad2.dpad_down) {
                 //robot.lift.setPower(1);
-                robot.liftDown();
+                robot.liftDown(1.0);
             } else {
                 robot.lift.setPower(0);
             }
