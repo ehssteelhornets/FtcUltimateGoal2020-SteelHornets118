@@ -166,28 +166,30 @@ public class Pushbot_2020 {
         }
     }
 
-    public  void liftDown(double speed) {
+    public void liftDown(double speed) {
         liftPos = 0;
-        while(liftSensor.getDistance(DistanceUnit.CM) < p0) {
+        while (getBetterDistance() < p0) {
             lift.setPower(-1 * speed * up);
         }
+        lift.setPower(0);
     }
 
     public void liftUp(double speed) {
         liftPos++;
         if (liftPos == 1) {
-            while(liftSensor.getDistance(DistanceUnit.CM) > p1) {
+            while (getBetterDistance() > p1) {
                 lift.setPower(speed * up);
             }
         } else if (liftPos == 2) {
-            while(liftSensor.getDistance(DistanceUnit.CM) > p2) {
+            while (getBetterDistance() > p2) {
                 lift.setPower(speed * up);
             }
         } else if (liftPos == 3) {
-            while(liftSensor.getDistance(DistanceUnit.CM) > p3) {
+            while (getBetterDistance() > p3) {
                 lift.setPower(speed * up);
             }
         }
+        lift.setPower(0);
     }
 
     public void load() {
@@ -271,6 +273,15 @@ public class Pushbot_2020 {
             rev(false);
         }
         barrel(0);
+    }
+
+    public double getBetterDistance() {
+        double dist = liftSensor.getDistance(DistanceUnit.CM);
+        if (!Double.isNaN(dist)) {
+            return dist;
+        } else {
+            return liftSensor.cmUltrasonic();
+        }
     }
 
 

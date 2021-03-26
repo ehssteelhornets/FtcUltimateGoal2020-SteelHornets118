@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.hardware.Sensor;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -127,8 +125,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             // Get range sensor data
             telemetry.addData("raw ultrasonic", robot.liftSensor.rawUltrasonic());
             telemetry.addData("raw optical", robot.liftSensor.rawOptical());
-            telemetry.addData("cm optical", "%.2f cm", robot.liftSensor.cmOptical());
-            telemetry.addData("in", "%.2f in", robot.liftSensor.getDistance(DistanceUnit.INCH));
+            telemetry.addData("cm optical", "%2.2f cm", robot.liftSensor.cmOptical());
+            telemetry.addData("Super cm:", "%.2f cm", robot.getBetterDistance());
             telemetry.update();
         }
     }
