@@ -43,7 +43,7 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         telemetry.update();*/
         waitForStart();
 
-        /*robot.openClaw(true);
+        robot.openClaw(true);
         robot.armOut(true);
         sleep(500);
         robot.openClaw(false);
@@ -59,14 +59,14 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         sleep(1000);
         encoderDrive(.4, 65, 'B');
         sleep(1000);
-        robot.barrel(1);*/
-        //robot.rev(true);
+        robot.barrel(1);
+        robot.rev(true);
         sleep(2000);
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             if (i > 0) {
                 encoderDrive(.4, 10, 'L');
                 robot.liftUp(.4);
-                //sleep(2000);
+                sleep(200);
             }
             robot.launch(true);
             sleep(1000);
@@ -76,27 +76,6 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.rev(false);
         sleep(250);
         encoderDrive(.7, 15,'F');
-        /*encoderDrive(.7, 45, 'B'); Wall Grounding
-        encoderDrive(.4,10,'B');
-        sleep(250);
-        encoderDrive(.7,45,'L');
-        encoderDrive(.4,10,'L');
-        sleep(250);
-        encoderDrive(.7,17,'F');*/
-        /* Grabbing second wobble
-        robot.armOut(true);
-        sleep(250);
-        encoderDrive(.4, 28, 'R');
-        robot.openClaw(false);
-        sleep(250);
-        encoderDrive(.7, 24, 'L');
-        encoderDrive(.7,84,'F');
-        robot.openClaw(true);
-        sleep(200);
-        robot.armOut(false);
-        sleep(250);
-        encoderDrive(.7,34,'B');
-        robot.barrel(0);*/
     }
 
     public void encoderDrive(double speed,

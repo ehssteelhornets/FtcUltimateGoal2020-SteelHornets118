@@ -12,7 +12,8 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();
     Pushbot_2020 robot = new Pushbot_2020();
-    int liftPos = 1;
+    boolean liftMoving = false;
+    double liftPos;
 
     @Override
     public void runOpMode() {
@@ -103,16 +104,49 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
                 robot.armMotor.setPower(0);
             }
 
-            // Ring lift driven by dpad up and down
-            if (gamepad2.dpad_up) {
+            // Ring lift driven by dpad
+            if (gamepad2.dpad_right) {
+                robot.currLiftPos = 0;
+                liftMoving = true;
                 //robot.lift.setPower(-1);
-                robot.liftUp(1.0);
+                //robot.liftUp(1.0);
             } else if (gamepad2.dpad_down) {
+                robot.currLiftPos = 1;
+                liftMoving = true;
                 //robot.lift.setPower(1);
-                robot.liftDown(1.0);
-            } else {
+                //robot.liftDown(1.0);
+            } else if (gamepad2.dpad_left) {
+                robot.currLiftPos = 2;
+                liftMoving = true;
+                //robot.lift.setPower(-1);
+                //robot.liftUp(1.0);
+            } else if (gamepad2.dpad_up) {
+                robot.currLiftPos = 3;
+                liftMoving = true;
+                //robot.lift.setPower(1);
+                //robot.liftDown(1.0);
+            }/*else {
                 robot.lift.setPower(0);
+            }*/
+            if (liftMoving) {
+                liftPos = robot.liftPos[robot.currLiftPos];
+                if (robot.currLiftPos == 0) {
+                    if (robot.getBetterDistance() < liftPos) {
+                        robot.lift.setPower(-1 * robot.up);
+                    } else {
+                        liftMoving = false;
+                        robot.lift.setPower(0);
+                    }
+                } else {
+                    if (robot.getBetterDistance() > liftPos) {
+                        robot.lift.setPower(1.0 * robot.up);
+                    } else {
+                        liftMoving = false;
+                        robot.lift.setPower(0);
+                    }
+                }
             }
+
 
             // Barrel alignment driven by a, b, and y
             if (gamepad2.y) {
@@ -125,7 +159,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             // Get range sensor data
             telemetry.addData("raw ultrasonic", robot.liftSensor.rawUltrasonic());
             telemetry.addData("raw optical", robot.liftSensor.rawOptical());
-            telemetry.addData("cm optical", "%2.2f cm", robot.liftSensor.cmOptical());
+            telemetry.addData("liftPos:", "%2.2f cm", liftPos);
             telemetry.addData("Super cm:", "%.2f cm", robot.getBetterDistance());
             telemetry.update();
         }

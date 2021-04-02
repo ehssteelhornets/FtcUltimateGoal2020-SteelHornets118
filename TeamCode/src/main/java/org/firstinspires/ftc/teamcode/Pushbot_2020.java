@@ -40,11 +40,8 @@ public class Pushbot_2020 {
     // Set lift variables
     final int up = -1;
     // Positions are the number of inches between the range sensor and the bottom of the lift
-    final double p0 = 10;    // Intake position
-    final double p1 = 7; // Launch position for 3 rings
-    final double p2 = 5;  // Launch position for 2 rings
-    final double p3 = 3;  // Launch position for 1 ring
-    int liftPos = 1;
+    final double[] liftPos = new double[]{10, 7, 4.88, 2.6}; // Intake position, Launch position for 3 rings, Launch position for 2 rings, Launch position for 1 ring
+    public int currLiftPos = 1;
 
     /* local OpMode members. */
     HardwareMap hwMap;
@@ -167,112 +164,22 @@ public class Pushbot_2020 {
     }
 
     public void liftDown(double speed) {
-        liftPos = 0;
-        while (getBetterDistance() < p0) {
+        currLiftPos = 0;
+        while (getBetterDistance() < liftPos[0]) {
             lift.setPower(-1 * speed * up);
         }
         lift.setPower(0);
     }
 
     public void liftUp(double speed) {
-        liftPos++;
-        if (liftPos == 1) {
-            while (getBetterDistance() > p1) {
-                lift.setPower(speed * up);
-            }
-        } else if (liftPos == 2) {
-            while (getBetterDistance() > p2) {
-                lift.setPower(speed * up);
-            }
-        } else if (liftPos == 3) {
-            while (getBetterDistance() > p3) {
-                lift.setPower(speed * up);
-            }
+        currLiftPos++;
+        if(currLiftPos > 3) {
+            currLiftPos = 3;
+        }
+        while (getBetterDistance() > liftPos[currLiftPos]) {
+            lift.setPower(speed * up);
         }
         lift.setPower(0);
-    }
-
-    public void load() {
-        lift.setPower(-1);
-    }
-
-    public void autoFire(char target) {
-        barrel(1);
-        rev(true);
-        runtime.reset();
-        while (runtime.seconds() < 2) {
-            rev(true);
-        }
-        if (target == 'T') { // Tower AutoFire
-            for (int i = 0; i < 3; i++) {
-                runtime.reset();
-                while (runtime.seconds() < .5) {
-                    launch(true);
-                }
-                runtime.reset();
-                while (runtime.seconds() < .5) {
-                    launch(false);
-                }
-                if (i < 2) {
-                    runtime.reset();
-                    while (runtime.seconds() < 1) {
-                        lift.setPower(-1);
-                    }
-                    lift.setPower(0);
-                }
-            }
-        } else if (target == 'R') { // Red Side AutoFire
-            for (int i = 0; i < 3; i++) {
-                runtime.reset();
-                while (runtime.seconds() < 2) {
-                    lift.setPower(0);
-                }
-                /*
-                while (runtime.seconds() < .5) {
-                    launch(true);
-                }
-                runtime.reset();
-                while (runtime.seconds() < .5) {
-                    launch(false);
-                }
-                 */
-                if (i < 2) {
-                    /*
-                    runtime.reset();
-                    while (runtime.seconds() < 1) {
-                        lift.setPower(-1);
-                    }
-                     */
-                    lift.setPower(0);
-                    encoderDrive(.4, 6, 'L');
-                }
-            }
-        } else if (target == 'B') { // Blue Side AutoFire
-            for (int i = 0; i < 3; i++) {
-                runtime.reset();
-                while (runtime.seconds() < .5) {
-                    launch(true);
-                }
-                runtime.reset();
-                while (runtime.seconds() < .5) {
-                    launch(false);
-                }
-                if (i < 2) {
-                    runtime.reset();
-                    while (runtime.seconds() < 1) {
-                        lift.setPower(-1);
-                    }
-                    lift.setPower(0);
-                    encoderDrive(.4, 6, 'R');
-                }
-            }
-        }
-        rev(false);
-        runtime.reset();
-        while (runtime.seconds() < 2) {
-            rev(false);
-        }
-        barrel(0);
     }
 
     public double getBetterDistance() {
