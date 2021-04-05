@@ -49,15 +49,15 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.openClaw(false);
         sleep(250);
         encoderDrive(.7, 108, 'F');
-        encoderDrive(.4,12,'R');
+        //encoderDrive(.4,12,'R');
         robot.openClaw(true);
         sleep(100);
         robot.armOut(false);
-        encoderDrive(.4,10,'L');
-        sleep(500);
-        encoderTurn(.4,8,false);
+        //encoderDrive(.4,10,'L');
+        //sleep(500);
+        encoderDrive(.4, 52, 'B');
         sleep(1000);
-        encoderDrive(.4, 65, 'B');
+        encoderTurn(.4,10,false);
         sleep(1000);
         robot.barrel(1);
         robot.rev(true);
@@ -76,6 +76,8 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         robot.rev(false);
         sleep(250);
         encoderDrive(.7, 15,'F');
+        robot.barrel(0);
+        robot.liftDown(1);
     }
 
     public void encoderDrive(double speed,

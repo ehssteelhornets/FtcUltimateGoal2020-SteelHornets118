@@ -56,7 +56,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             robot.rev(gamepad1.left_trigger > 0);
 
             // Launch driven by right trigger
-            robot.launch(gamepad1.right_trigger > 0);
+            robot.launch(gamepad1.right_trigger > .5);
 
             // Driving with
             double r = Math.hypot(gamepad1.left_stick_x, -gamepad1.left_stick_y);
@@ -148,14 +148,17 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             }
 
 
-            // Barrel alignment driven by a, b, and y
-            if (gamepad2.y) {
+            // Barrel alignment driven by letter buttons
+            if (gamepad2.x) {
+                robot.barrel(3);
+            } else if (gamepad2.y) {
                 robot.barrel(2);
             } else if (gamepad2.b) {
                 robot.barrel(1);
             } else if (gamepad2.a) {
                 robot.barrel(0);
             }
+
             // Get range sensor data
             telemetry.addData("raw ultrasonic", robot.liftSensor.rawUltrasonic());
             telemetry.addData("raw optical", robot.liftSensor.rawOptical());
