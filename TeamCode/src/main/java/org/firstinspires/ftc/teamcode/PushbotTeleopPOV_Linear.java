@@ -18,7 +18,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Save reference to Hardware map
-        telemetry.addData("Status", "Not Initialized");
+        telemetry.addData("Status", "Initialized");
         telemetry.update();
         robot.init(hardwareMap);
         // Wait for the game to start (driver presses PLAY)
@@ -113,7 +113,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             } else if (gamepad2.dpad_down) {
                 robot.currLiftPos = 1;
                 liftMoving = true;
-                //robot.lift.setPower(1);
+                //robot.lift.setPower(-1);
                 //robot.liftDown(1.0);
             } else if (gamepad2.dpad_left) {
                 robot.currLiftPos = 2;

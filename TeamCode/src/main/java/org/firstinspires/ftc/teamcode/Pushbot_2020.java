@@ -40,8 +40,8 @@ public class Pushbot_2020 {
     // Set lift variables
     final int up = -1;
     // Positions are the number of inches between the range sensor and the bottom of the lift
-    final double[] liftPos = new double[]{10, 7, 4.88, 2.6}; // Intake position, Launch position for 3 rings, Launch position for 2 rings, Launch position for 1 ring
-    public int currLiftPos = 1;
+    final double[] liftPos = new double[]{10, 6.03, 4.02, 2.58}; // Intake position, Launch position for 3 rings, Launch position for 2 rings, Launch position for 1 ring
+    public int currLiftPos = 0;
 
     /* local OpMode members. */
     HardwareMap hwMap;
@@ -153,16 +153,16 @@ public class Pushbot_2020 {
             barrelServoL.setPosition(1);
         } else if (pos == 1) {
             // Power Shot Position
-            barrelServoR.setPosition(.8);
-            barrelServoL.setPosition(.8);
-        } else if (pos == 2) {
-            // High Goal Position
             barrelServoR.setPosition(.7);
             barrelServoL.setPosition(.7);
+        } else if (pos == 2) {
+            // High Goal Position
+            barrelServoR.setPosition(.58);
+            barrelServoL.setPosition(.58);
         } else if (pos == 3) {
             // Initialization Position
-            barrelServoL.setPosition(.6);
-            barrelServoR.setPosition(.4);
+            barrelServoL.setPosition(.3);
+            barrelServoR.setPosition(.3);
         }
     }
 

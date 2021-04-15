@@ -65,9 +65,9 @@ public class Parking_Wobble_Auto extends LinearOpMode {
         for (int i = 0; i < 3; i++) {
             if (i > 0) {
                 encoderDrive(.4, 10, 'L');
-                robot.liftUp(.4);
-                sleep(200);
             }
+            robot.liftUp(.4);
+            sleep(200);
             robot.launch(true);
             sleep(1000);
             robot.launch(false);
